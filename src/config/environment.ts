@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 export interface EnvironmentConfig {
     name: string;
     baseURL: string;
-    username?: string;
-    password?: string;
+    username: string;
+    password: string;
 }
 
 export function getEnvironment(): EnvironmentConfig {
@@ -52,8 +52,15 @@ export function getEnvironment(): EnvironmentConfig {
 
     return {
         name: environmentName,
-        baseURL: process.env.BASE_URL,
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD
+        baseURL: getRequiredValue(process.env.BASE_URL, 'BASE_URL'),
+        username: getRequiredValue(process.env.USER_NAME, 'USER_NAME'),
+        password: getRequiredValue(process.env.PASSWORD, 'PASSWORD')
     };
+}
+
+function getRequiredValue(value: string | undefined, variableName: string): string {
+if(!value) {
+    throw new Error(`Required configuration '${variableName}' is missing.`);
+}
+return value;
 }
