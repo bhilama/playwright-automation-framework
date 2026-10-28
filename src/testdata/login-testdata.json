@@ -1,0 +1,23 @@
+[
+    {
+        "scenario": "Invalid username and password",
+        "username": "wrongUser",
+        "password": "wrongPassword",
+        "expectedMessage": "Invalid credentials",
+        "messageType": "alert"
+    },
+    {
+        "scenario": "Empty username",
+        "username": "",
+        "password": "somePassword",
+        "expectedMessage": "Required",
+        "messageType": "validation"
+    },
+    {
+        "scenario": "Empty password",
+        "username": "someUsername",
+        "password": "",
+        "expectedMessage": "Required",
+        "messageType": "validation"
+    }
+]

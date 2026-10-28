@@ -5,14 +5,16 @@ export class LoginPage{
     private readonly userNameTextbox: Locator;
     private readonly passwordTextbox: Locator;
     private readonly loginButton: Locator;
-    
+
     readonly invalidCredentialMsg: Locator;
+    readonly requiredCredentialMsg: Locator;
 
     constructor(private readonly page: Page){
     this.userNameTextbox = this.page.getByRole('textbox', {name: 'Username'});
     this.passwordTextbox = this.page.getByRole('textbox', {name: 'Password'});
     this.loginButton = this.page.getByRole('button', {name: 'Login'});
-    this.invalidCredentialMsg = this.page.getByText('Invalid credentials');
+    this.invalidCredentialMsg = this.page.getByRole('alert');
+    this.requiredCredentialMsg = this.page.getByText('Required');
     };    
     
 
