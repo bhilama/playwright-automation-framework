@@ -3,6 +3,7 @@ import { getEnvironment } from '../../src/config/environment';
 import loginData from '../../src/testdata/login-testdata.json';
 
 
+
 const env = getEnvironment();
 
 test(`User should log in successfully with valid credentials.`, async ({loginPage, dashboardPage}) =>{
@@ -17,15 +18,20 @@ test(`User should log in successfully with valid credentials.`, async ({loginPag
 
 
 for(const data of loginData){
-    test(`User should get an error message for '${data.scenario}'`, async ({loginPage}) => {
-        await loginPage.navigate();
+    test(`User should get an error message for '${data.scenario}'`, async ({loginPage, logger}) => {
+        logger.info(`Starting scenario: ${data.scenario}`);
+
+        await loginPage.navigate();        
         await loginPage.login(data.username, data.password);
+        
 
         if(data.messageType.trim() == "alert"){
             await expect(loginPage.invalidCredentialMsg).toHaveText('Invalid credentials');
         }
         else{
             await expect(loginPage.requiredCredentialMsg).toHaveText(data.expectedMessage);
-        }        
+        }   
+        
+        logger.info(`Scenario passed: ${data.scenario}`);
     });
 };
