@@ -4,7 +4,8 @@ import { getEnvironment } from './src/config/environment';
 const environment = getEnvironment();
 
 console.log(`Running test against: '${environment.name}' environment.`);
-console.log(`Base URL: '${environment.baseURL}'`);
+console.log(`UI Base URL: '${environment.baseURL}'`);
+console.log(`API Base URL: '${environment.apiBaseURL}'`);
 
 /**
  * Read environment variables from file.

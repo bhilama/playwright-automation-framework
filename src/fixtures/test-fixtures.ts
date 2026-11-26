@@ -2,13 +2,21 @@ import { test as base, expect } from '@playwright/test';
 
 import { LoginPage } from '../pages/LoginPage';
 import { DashboardPage } from '../pages/DashboardPage';
+
+import { BaseApiClient } from '../api/BaseApiClient';
+
 import { Logger } from '../utilities/Logger';
+import { getEnvironment } from '../config/environment';
+
+const environment = getEnvironment();
+
 
 type TestFixtures = {
     loginPage: LoginPage;
     dashboardPage: DashboardPage;
     testLifeCycle: void;
     logger: Logger;
+    apiClient: BaseApiClient;
 };
 
 export const test = base.extend<TestFixtures>({
@@ -28,6 +36,12 @@ export const test = base.extend<TestFixtures>({
         const logger = new Logger();
 
         await use(logger);
+    },
+
+    apiClient: async ({request, logger}, use) => {
+        const apiClient = new BaseApiClient(request, logger, environment.apiBaseURL);
+
+        await use(apiClient);
     },
 
     testLifeCycle: [async ({logger}, use, testInfo) => {
