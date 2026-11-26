@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 export interface EnvironmentConfig {
     name: string;
     baseURL: string;
+    apiBaseURL: string;
     username: string;
     password: string;
 }
@@ -42,17 +43,11 @@ export function getEnvironment(): EnvironmentConfig {
         );
     }
 
-    // Validate required configuration
-    if (!process.env.BASE_URL) {
-        throw new Error(
-            `BASE_URL is missing in ${environmentName}.env`
-        );
-    }
     
-
     return {
         name: environmentName,
         baseURL: getRequiredValue(process.env.BASE_URL, 'BASE_URL'),
+        apiBaseURL: getRequiredValue(process.env.API_BASE_URL, 'API_BASE_URL'),
         username: getRequiredValue(process.env.USER_NAME, 'USER_NAME'),
         password: getRequiredValue(process.env.PASSWORD, 'PASSWORD')
     };
